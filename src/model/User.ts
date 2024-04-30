@@ -75,8 +75,8 @@ const UserSchema: Schema<User> = new Schema({
   messages: [MessageSchema],
 });
 
-//nextjs is edge runtime famework mongoose.models.User means user already exists (as mongoose.Model<User>)  it mean mongoose user exists than give user data. 
-//mongoose.model<User>("User", UserSchema); mongoose user not exist created new user 
+//nextjs is edge runtime famework mongoose.models.User means user already exists (as mongoose.Model<User>)  it mean mongoose user exists than give user data.
+//mongoose.model<User>("User", UserSchema); mongoose user not exist created new user
 
 const UserModel =
   (mongoose.models.User as mongoose.Model<User>) ||
