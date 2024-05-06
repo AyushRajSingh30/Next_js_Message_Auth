@@ -10,7 +10,6 @@ export interface Message extends Document {
 }
 
 //We want Mongoose Schema that why we used Schema<Message> but we used MessageSchema:Message that time we directly assine value this is not create Mongoose schema.
-
 const MessageSchema: Schema<Message> = new Schema({
   content: {
     type: String,
@@ -22,7 +21,6 @@ const MessageSchema: Schema<Message> = new Schema({
     default: Date.now(),
   },
 });
-
 export interface User extends Document {
   username: string;
   password: string;

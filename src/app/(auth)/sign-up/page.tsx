@@ -25,10 +25,11 @@ import { signUpSchema } from "@/schemas/signUpSchema";
 
 export default function SignUpForm() {
   const [username, setUsername] = useState("");
-  //this message show username is avilable or not
+  //👇 usernameMessage show user is unique of not
   const [usernameMessage, setUsernameMessage] = useState("");
+  //👇 isCheaker is a loader of username message
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
-  //form state or status
+  //👇 loader of onsubmit
   const [isSubmitting, setIsSubmitting] = useState(false);
   //debounce mean kisi bhi chij me delay add kar do
   //useDebounceCallback is used for control function of variable
@@ -39,10 +40,10 @@ export default function SignUpForm() {
   //toast for give popup nodification for more knowlage to toast
   const { toast } = useToast();
 
-  //This is syntax of useForm we access from shandcn we used this for structure of Form
+  //z.infer<...>: This is a utility type provided by Zod that allows you to extract the inferred TypeScript type from a Zod schema. (Optional.)
 
-  //z.infer<typeof signUpSchema> it insilized data base by using zod validation this is optional
   const form = useForm<z.infer<typeof signUpSchema>>({
+    //resolver track the field of form. form field follow the validation of Zod signUpSchema
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       username: "",
@@ -51,7 +52,7 @@ export default function SignUpForm() {
     },
   });
 
-  //we used react-query (useQuery)
+  //TODO: cheak username is unique by api call
   useEffect(() => {
     const checkUsernameUnique = async () => {
       if (username) {
@@ -75,7 +76,8 @@ export default function SignUpForm() {
     checkUsernameUnique();
   }, [username]);
 
-  //z.infer<typeof signUpSchema> it insilized data base by using zod validation this is optional
+  //z.infer<typeof signUpSchema> (Optional)
+  //TODO:
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
     try {
@@ -157,14 +159,13 @@ export default function SignUpForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <Input {...field} name="email" />
-                  <p className="text-muted text-gray-400 text-sm">
+                  <p className="text-muted text-gray-900 text-sm">
                     We will send you a verification code
                   </p>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <FormField
               name="password"
               control={form.control}

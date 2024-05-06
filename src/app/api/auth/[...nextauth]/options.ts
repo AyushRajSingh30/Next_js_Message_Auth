@@ -24,6 +24,8 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials: any): Promise<any> {
         await dbConnect();
+        // console.log(credentials);
+        // console.log(credentials.identifier);
         try {
           const user = await UserModel.findOne({
             $or: [
@@ -31,9 +33,11 @@ export const authOptions: NextAuthOptions = {
               { username: credentials.identifier },
             ],
           });
+          // console.log("user: ", user);
           if (!user) {
             throw new Error("No user found with email and username");
           }
+          // console.log("user.isverified", user.isVerified);
 
           if (!user.isVerified) {
             throw new Error("Plese verify your account before login");
@@ -43,8 +47,10 @@ export const authOptions: NextAuthOptions = {
             credentials.password,
             user.password
           );
+          // console.log("isPasswordcorrect:", isPasswordcorrect);
 
           if (isPasswordcorrect) {
+            console.log("user:", user);
             return user;
           } else {
             throw new Error("Password Incorrected");
@@ -56,15 +62,11 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-  //jwt and session is modifyed in (next-auth.d.ts)  file
-  //we used callback because we used jwt and session we easly access from token and session.
-  //we modify callback because we not call database again and again we only call database one time and extract all values from database.
+  //Callbacks are asynchronous functions you can use to control what happens when an action is performed. Callbacks are extremely powerful, especially in scenarios involving JSON Web Tokens as they allow you to implement access controls without a database and to integrate with external databases or APIs.
 
-  //By using these callbacks, you can customize the JWT and session objects to include additional data or modify existing data as per your requirements. This can be useful for enhancing security, optimizing performance, or adding custom user attributes to the authentication flow.
-  //By using these callbacks, you can customize the JWT and session objects to include additional data or modify existing data as per your requirements. This can be useful for enhancing security, optimizing performance, or adding custom user attributes to the authentication flow.
-
+  //datatype is define in next-auth.d.ts
   callbacks: {
-    //user come from authOption and user store in jwt
+    // This callback is called whenever a JSON Web Token is created (i.e. at sign in) or updated (i.e whenever a session is accessed in the client). The returned value will be encrypted, and it is stored in a cookie. Without database call
     async jwt({ token, user }) {
       if (user) {
         token._id = user._id?.toString();
@@ -75,6 +77,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
 
+    // The session callback is called whenever a session is checked. By default, only a subset of the token is returned for increased security. If you want to make something available you added to the token (like access_token and user.id from above) via the jwt() callback, you have to explicitly forward it here to make it available to the client.
     async session({ session, user, token }) {
       if (token) {
         session.user._id = token._id;
@@ -86,8 +89,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
 
-  //perpose of pages is /auth show in route we used pages that time we used /sign-in it replace /auth
-  //by using this method pages we not need to desine pages of sign-in this auth mehod automaticaly desine new page for sign-in on route /sign-in
+  //pages mean in frontend i called SignIn page by used /sign-in
   pages: {
     signIn: "/sign-in",
   },

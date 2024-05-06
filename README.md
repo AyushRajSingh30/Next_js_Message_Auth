@@ -1,3 +1,24 @@
+# About Nextjs Edge Fameworker
+
+This is edge time famework it mean Its server run as per user requirement application run as per user demand and some time database connection close. That why we connect database every ware but in core backend server run continously non stom that why we connect database only in single time.
+
+# Package Used in Project
+
+## Zod: A TypeScript Validation Package (npm zod | /schema/signUpSchema.ts)
+
+Output;=>(success, data)
+Zod is a third-party TypeScript validation package. It offers various functions for validating data, such as checking if an email is in the correct format using z.string().email(), which means the email type is a string and conforms to the email format.
+
+For more validation examples and a better understanding, you can visit Zod on npm or check out the /schemas/signUpSchema.ts file.
+
+Advantages of Zod:
+In the core backend, we often have to write custom validation logic for every object, including email addresses, passwords, usernames, and more. Zod simplifies this process by providing a set of pre-built validation functions, saving time and effort in development.
+
+## Next-Auth js  ()
+  we meed to apply middleware on next-auth js add we also need to apply provider in this
+
+
+# Instruction Provide by NextJs by default
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

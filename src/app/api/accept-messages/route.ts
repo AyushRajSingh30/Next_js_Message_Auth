@@ -1,11 +1,12 @@
 //getServerSession provide by next auth we already provide user in session that time we easly access user from session.We need to pass authOption in this session as parameter
+//this getServerSession is only used in backend for access session you also used gesession
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
 import { User } from "next-auth";
 
-//
+//POST request for change the status of acceptMessagel̥
 export async function POST(request: Request) {
   await dbConnect();
 
@@ -63,6 +64,7 @@ export async function POST(request: Request) {
   }
 }
 
+//GET request for get the status of accept message
 export async function GET(request: Request) {
   await dbConnect();
 
