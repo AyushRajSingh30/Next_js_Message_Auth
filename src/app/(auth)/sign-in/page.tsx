@@ -78,7 +78,6 @@ export default function VerifyAccount() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
-                  //field used is similar work like register
                   <Input type="password" {...field} name="password" />
                   <FormMessage />
                 </FormItem>
